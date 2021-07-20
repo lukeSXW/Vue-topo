@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <script src="https://cdn.bootcdn.net/ajax/libs/three.js/r127/three.min.js"></script>
+
+    <script>
+        // 初始化场景
+        const scene = new THREE.Scene();
+
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+
+        const renderer = new THREE.WebGLRenderer();
+
+        renderer.setSize(window.innerWidth, window.innerHeight);
+
+        document.body.appendChild(renderer.domElement);
+        var geometry = new THREE.BoxGeometry(1, 1, 1);
+        // var material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+        // var cube = new THREE.Mesh(geometry, material);
+        // scene.add(cube);
+        
+        // TextureLoader创建一个纹理加载器对象，可以加载图片作为几何体纹理
+        var textureLoader = new THREE.TextureLoader();
+        // 执行load方法，加载纹理贴图成功后，返回一个纹理对象Texture
+        textureLoader.load('https://www.htmlstudio.top/imgs/others/beauty_2', function (texture) {
+            var material = new THREE.MeshBasicMaterial({
+                // color: 0x00ff00,
+                // 设置颜色纹理贴图：Texture对象作为材质map属性的属性值
+                map: texture,
+                //设置颜色贴图属性值
+            }); //材质对象Material
+            var mesh = new THREE.Mesh(geometry, material); //网格模型对象Mesh
+            scene.add(mesh);
+            camera.position.z = 10;
+            function render() {
+                requestAnimationFrame(render);
+                mesh.rotation.x += 0.01
+                mesh.rotation.y += 0.01
+                mesh.rotation.z += 0.01
+                renderer.render(scene, camera)
+            }
+            render();
+        })
+
+
+
+    </script>
+</body>
+
+</html>
